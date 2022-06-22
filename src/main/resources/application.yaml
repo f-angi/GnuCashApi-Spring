@@ -1,0 +1,13 @@
+server:
+  port: 8088
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost/gnucash
+    username: gnucash
+    password: gnucash
+  security:
+    user:
+      name: admin
+      password: admin
+security:
+  ignored: /**
