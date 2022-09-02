@@ -1,15 +1,15 @@
 package party.fangi.gnucashapi.persistence.model;
 
-import lombok.*;
+import lombok.Data;
 
-import javax.persistence.*;
-import java.util.List;
-import java.util.Objects;
+import javax.persistence.Basic;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
 
 @Data
 @Entity
 public class Accounts {
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
     @Column(name = "guid", nullable = false, length = 32)
     private String guid;

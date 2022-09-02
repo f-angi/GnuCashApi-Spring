@@ -9,5 +9,5 @@ import java.util.List;
 
 @RepositoryRestResource(collectionResourceRel = "transactions", path = "transactions")
 public interface TransactionRepository extends PagingAndSortingRepository<Transactions, String> {
-    List<Transactions> findByDescriptionContaining(@Param("descr") String description);
+    List<Transactions> findByDescriptionContainingIgnoreCase(@Param("descr") String description);
 }

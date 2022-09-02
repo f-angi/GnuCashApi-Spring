@@ -1,11 +1,13 @@
 package party.fangi.gnucashapi.persistence.model;
 
-import javax.persistence.*;
+import javax.persistence.Basic;
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.Id;
 import java.util.Objects;
 
 @Entity
 public class Versions {
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
     @Column(name = "table_name", nullable = false, length = 50)
     private String tableName;

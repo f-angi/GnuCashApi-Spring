@@ -9,7 +9,6 @@ import java.util.List;
 @Data
 @Entity
 public class Transactions {
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
     @Column(name = "guid", nullable = false, length = 32)
     private String guid;

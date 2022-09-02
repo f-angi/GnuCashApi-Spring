@@ -1,15 +1,13 @@
 package party.fangi.gnucashapi.persistence.model;
 
-import lombok.*;
+import lombok.Data;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
-import java.util.Objects;
 
 @Data
 @Entity
 public class Splits {
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Id
     @Column(name = "guid", nullable = false, length = 32)
     private String guid;
