@@ -1,11 +1,10 @@
 package party.fangi.gnucashapi.persistence.model;
 
+import jakarta.persistence.Basic;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.persistence.Id;
 import lombok.Data;
-
-import javax.persistence.Basic;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.Id;
 
 @Data
 @Entity
@@ -43,8 +42,5 @@ public class Accounts {
     @Basic
     @Column(name = "placeholder", nullable = true)
     private Integer placeholder;
-
-//    @OneToMany(mappedBy = "account")
-//    private List<Splits> split;
 
 }

@@ -1,6 +1,6 @@
 package party.fangi.gnucashapi.persistence.model;
 
-import javax.persistence.*;
+import jakarta.persistence.*;
 import java.sql.Date;
 import java.util.Objects;
 

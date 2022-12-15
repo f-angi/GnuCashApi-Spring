@@ -16,14 +16,14 @@ import static org.junit.Assert.assertEquals;
 @SpringBootTest
 @ActiveProfiles("test")
 @Sql(scripts = "classpath:db-data.sql", executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD)
-public class ExpensesServiceTest {
+class ExpensesServiceTest {
 
     @Autowired
     private ExpensesService expensesService;
 
     @Test
-    public void shouldGetTransationcsByDescription() {
-        List<Expense> expenseList = expensesService.getTransactionsByDescription("Dinner");
+    void shouldGetTransationcsByDescription() {
+        List<Expense> expenseList = expensesService.getExpensesByDescription("Dinner");
         assertEquals(1, expenseList.size());
         Expense expense = expenseList.get(0);
         assertEquals("dinner", expense.getDescription());
