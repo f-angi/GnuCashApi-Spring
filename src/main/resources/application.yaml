@@ -2,7 +2,7 @@ server:
   port: 8087
 spring:
   datasource:
-    url: jdbc:postgresql://localhost/gnucash2
+    url: jdbc:postgresql://localhost/gnucash-orig
     username: gnucash
     password: gnucash
   security:
@@ -14,4 +14,5 @@ security:
 app:
   default:
     page.size: 10
-    sort.field: description
+    sort.field: enterDate
+    sort.direction: desc
