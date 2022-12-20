@@ -3,15 +3,13 @@ package party.fangi.gnucashapi.rest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 import party.fangi.gnucashapi.model.Expense;
 import party.fangi.gnucashapi.model.Sort;
 import party.fangi.gnucashapi.service.ExpensesService;
 
 @RestController
+@RequestMapping("api")
 @CrossOrigin(origins = "http://192.168.1.5:4200", maxAge = 3600)
 @RequiredArgsConstructor
 public class ExpensesController {

@@ -1,16 +1,20 @@
 server:
   port: 8087
+
 spring:
   datasource:
-    url: jdbc:postgresql://localhost/gnucash-orig
+    url: jdbc:postgresql://192.168.1.102/gnucash
     username: gnucash
     password: gnucash
   security:
     user:
       name: admin
       password: admin
-security:
-  ignored: /**
+
+rsa:
+  private-key: "classpath:certs/private.pem"
+  public-key: "classpath:certs/public.pem"
+
 app:
   default:
     page.size: 10
