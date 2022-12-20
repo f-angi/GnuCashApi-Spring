@@ -1,0 +1,1 @@
+TRUNCATE TABLE public.transactions, public.splits, public.accounts;

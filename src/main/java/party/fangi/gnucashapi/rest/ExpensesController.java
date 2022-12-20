@@ -33,7 +33,7 @@ public class ExpensesController {
                 .sortDirection(sortDirection)
                 .build();
 
-        return ResponseEntity.ok(expensesService.getExpensesByDescription(description, sort));
+        return ResponseEntity.ok(expensesService.getExpensesByDescriptionAndSort(description, sort));
     }
 
 }
