@@ -6,14 +6,18 @@ spring:
     url: jdbc:postgresql://192.168.1.102/gnucash
     username: gnucash
     password: gnucash
-  security:
-    user:
-      name: admin
-      password: admin
+
+logging:
+  level:
+    root: info
+
+security:
+   username: fangi
+   password: password
 
 rsa:
-  private-key: "classpath:certs/private.pem"
-  public-key: "classpath:certs/public.pem"
+  private-key: file:path/to/private/key
+  public-key: file:path/to/public/key
 
 app:
   default:

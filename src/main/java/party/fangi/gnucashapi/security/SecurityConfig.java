@@ -7,11 +7,13 @@ import com.nimbusds.jose.jwk.source.ImmutableJWKSet;
 import com.nimbusds.jose.jwk.source.JWKSource;
 import com.nimbusds.jose.proc.SecurityContext;
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
+import org.springframework.security.config.annotation.web.configurers.AbstractHttpConfigurer;
 import org.springframework.security.config.annotation.web.configurers.oauth2.server.resource.OAuth2ResourceServerConfigurer;
 import org.springframework.security.config.http.SessionCreationPolicy;
 import org.springframework.security.core.userdetails.User;
@@ -29,10 +31,16 @@ public class SecurityConfig {
 
     private final RsaKeyProperties rsaKeys;
 
+    @Value("${security.username}")
+    private String username;
+
+    @Value("${security.password}")
+    private String password;
+
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity httpSecurity) throws Exception {
         httpSecurity
-                .csrf(csrf -> csrf.disable())
+                .csrf(AbstractHttpConfigurer::disable)
                 .cors()
                 .and()
                 .authorizeHttpRequests(
@@ -47,8 +55,8 @@ public class SecurityConfig {
     @Bean
     public InMemoryUserDetailsManager users() {
         return new InMemoryUserDetailsManager(
-                User.withUsername("fangi")
-                        .password("{noop}password")
+                User.withUsername(username)
+                        .password("{noop}" + password)
                         .authorities("read")
                         .build()
         );
