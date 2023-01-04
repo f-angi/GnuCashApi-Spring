@@ -11,7 +11,7 @@ import party.fangi.gnucashapi.service.ExpensesService;
 
 @RestController
 @RequestMapping("api")
-@CrossOrigin(origins = "http://192.168.1.5:4200", maxAge = 3600) // FIXME: origins in properties
+@CrossOrigin(origins = "${cors.origins}", maxAge = 3600)
 @RequiredArgsConstructor
 public class ExpensesController {
 

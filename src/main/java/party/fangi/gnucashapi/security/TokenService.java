@@ -1,6 +1,7 @@
 package party.fangi.gnucashapi.security;
 
 import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.oauth2.jwt.JwtClaimsSet;
@@ -18,6 +19,9 @@ public class TokenService {
 
     private final JwtEncoder encoder;
 
+    @Value("${jwt.duration-minutes}")
+    private int duration;
+
     public String generateToken(Authentication authentication) {
         Instant now = Instant.now();
         String scope = authentication.getAuthorities().stream()
@@ -26,7 +30,7 @@ public class TokenService {
         JwtClaimsSet claims = JwtClaimsSet.builder()
                 .issuer("self")
                 .issuedAt(now)
-                .expiresAt(now.plus(20, ChronoUnit.MINUTES)) // FIXME: configurable
+                .expiresAt(now.plus(duration, ChronoUnit.MINUTES))
                 .subject(authentication.getName())
                 .claim("scope", scope)
                 .build();
