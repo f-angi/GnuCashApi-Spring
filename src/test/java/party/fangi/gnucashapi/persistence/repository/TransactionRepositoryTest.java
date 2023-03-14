@@ -26,4 +26,16 @@ class TransactionRepositoryTest {
         assertEquals("32a565f24a3d4d2da4027f4d5d4d829b", transactionsPage.getContent().get(0).getGuid());
     }
 
+    @Test
+    void shouldFindByAccountName() {
+        Page<Transactions> transactionsPage = transactionRepository.findBySplitAccountNameContainingIgnoreCase("recreation", null);
+        assertEquals(1, transactionsPage.getContent().size());
+    }
+
+    @Test
+    void shouldFindByDescriptionAndAccountName() {
+        Page<Transactions> transactionsPage = transactionRepository.findByDescriptionContainingIgnoreCaseAndSplitAccountNameContainingIgnoreCase("inner", "recreatio", null);
+        assertEquals(1, transactionsPage.getContent().size());
+    }
+
 }

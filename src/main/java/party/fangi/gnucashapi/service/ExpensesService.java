@@ -31,7 +31,7 @@ public class ExpensesService {
     private final PageRequestHelper pageRequestHelper;
 
     @Transactional
-    public Page<Expense> getExpensesByDescription(String description) {
+    public Page<Expense> getExpensesByDescriptionAndAccountName(String description, String accountName) {
         Sort sort = Sort.builder()
                 .pageNumber(0)
                 .pageSize(defaultPageSize)
@@ -39,20 +39,24 @@ public class ExpensesService {
                 .sortDirection(defaultSortDirection)
                 .build();
 
-        return getExpenses(description, sort);
+        return getExpenses(description, accountName, sort);
     }
 
     @Transactional
-    public Page<Expense> getExpensesByDescriptionAndSort(String description, Sort sort) {
-        return getExpenses(description, sort);
+    public Page<Expense> getExpensesByDescriptionAndAccountNameAndSort(String description, String accountName, Sort sort) {
+        return getExpenses(description, accountName, sort);
     }
 
-    private Page<Expense> getExpenses(String description, Sort sort) {
+    private Page<Expense> getExpenses(String description, String accountName, Sort sort) {
         PageRequest pageRequest = pageRequestHelper.mapSearchToPageRequest(sort);
 
         Page<Transactions> transactionsPage;
-        if (StringUtils.hasText(description)) {
+        if (StringUtils.hasText(description) && StringUtils.hasText(accountName)) {
+            transactionsPage = transactionRepository.findByDescriptionContainingIgnoreCaseAndSplitAccountNameContainingIgnoreCase(description, accountName, pageRequest);
+        } else if (StringUtils.hasText(description)) {
             transactionsPage = transactionRepository.findByDescriptionContainingIgnoreCase(description, pageRequest);
+        } else if (StringUtils.hasText(accountName)) {
+            transactionsPage = transactionRepository.findBySplitAccountNameContainingIgnoreCase(accountName, pageRequest);
         } else {
             transactionsPage = transactionRepository.findAll(pageRequest);
         }

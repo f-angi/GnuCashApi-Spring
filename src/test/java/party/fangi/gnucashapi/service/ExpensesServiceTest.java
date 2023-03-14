@@ -23,8 +23,8 @@ class ExpensesServiceTest {
     private ExpensesService expensesService;
 
     @Test
-    void shouldGetTransationcsByDescription() {
-        Page<Expense> expensePage = expensesService.getExpensesByDescription("Dinner");
+    void shouldGetTransactionsByDescription() {
+        Page<Expense> expensePage = expensesService.getExpensesByDescriptionAndAccountName("Dinner", "");
         assertEquals(1, expensePage.getContent().size());
         Expense expense = expensePage.getContent().get(0);
         assertEquals("dinner", expense.getDescription());

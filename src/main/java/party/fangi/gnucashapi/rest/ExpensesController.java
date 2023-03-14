@@ -20,6 +20,7 @@ public class ExpensesController {
     @GetMapping(value = "/expenses", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Page<Expense>> getExpenses(
             @RequestParam(required = false) String description,
+            @RequestParam(required = false) String accountName,
             @RequestParam(required = false) Integer pageNumber,
             @RequestParam(required = false) Integer pageSize,
             @RequestParam(required = false) String sortBy,
@@ -32,7 +33,7 @@ public class ExpensesController {
                 .sortDirection(sortDirection)
                 .build();
 
-        return ResponseEntity.ok(expensesService.getExpensesByDescriptionAndSort(description, sort));
+        return ResponseEntity.ok(expensesService.getExpensesByDescriptionAndAccountNameAndSort(description, accountName, sort));
     }
 
 }

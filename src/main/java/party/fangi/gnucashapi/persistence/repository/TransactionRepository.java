@@ -9,4 +9,8 @@ import party.fangi.gnucashapi.persistence.model.Transactions;
 @RepositoryRestResource(collectionResourceRel = "transactions", path = "transactions")
 public interface TransactionRepository extends PagingAndSortingRepository<Transactions, String> {
     Page<Transactions> findByDescriptionContainingIgnoreCase(String description, PageRequest pageRequest);
+
+    Page<Transactions> findBySplitAccountNameContainingIgnoreCase(String accountName, PageRequest pageRequest);
+
+    Page<Transactions> findByDescriptionContainingIgnoreCaseAndSplitAccountNameContainingIgnoreCase(String description, String accountName, PageRequest pageRequest);
 }

@@ -71,13 +71,13 @@ INSERT INTO public.accounts (guid,name,account_type,commodity_guid,commodity_scu
 	 ('5153d82779cb4a4687c9d98abf24f077','Opening Balances','EQUITY','301eba2ead67436ab5c4227673ec9737',100,0,'3109e83d1ffe46de987af8e925df99ba','','Opening Balances',0,0),
 	 ('019b2bf67b7c490b86fe3b948e56d6fa','Template Root','ROOT',NULL,0,0,NULL,'','',0,0);
 INSERT INTO public.transactions (guid,currency_guid,num,post_date,enter_date,description) VALUES
-	 ('da4dbc25f09d40abb447ee1f42db568f','301eba2ead67436ab5c4227673ec9737','','2022-09-01 10:59:00','2022-09-01 15:20:53',''),
-	 ('eb2a6f9d712242ba9f5d0bd589c6d543','301eba2ead67436ab5c4227673ec9737','','2022-09-01 10:59:00','2022-09-01 15:21:12',''),
+	 ('da4dbc25f09d40abb447ee1f42db568f','301eba2ead67436ab5c4227673ec9737','','2022-09-01 10:59:00','2022-09-01 15:20:53','salary'),
+	 ('eb2a6f9d712242ba9f5d0bd589c6d543','301eba2ead67436ab5c4227673ec9737','','2022-09-01 10:59:00','2022-09-01 15:21:12','withdrawal'),
 	 ('32a565f24a3d4d2da4027f4d5d4d829b','301eba2ead67436ab5c4227673ec9737','','2022-09-01 10:59:00','2022-09-01 15:22:08','dinner');
 INSERT INTO public.splits (guid,tx_guid,account_guid,memo,"action",reconcile_state,reconcile_date,value_num,value_denom,quantity_num,quantity_denom,lot_guid) VALUES
-	 ('ef8cae4d18be4a1b86436274ec5d7c02','da4dbc25f09d40abb447ee1f42db568f','653f596b292b42b08e5e5e7bc3961869','','','n','1970-01-01 00:00:00',-100000,100,-100000,100,NULL),
-	 ('99b8c3c797254573b1c5be71e443b3c1','da4dbc25f09d40abb447ee1f42db568f','8332b89790634aea8b0ef0aa8b48b704','','','n','1970-01-01 00:00:00',100000,100,100000,100,NULL),
-	 ('e7f166000b9b4b93a5b5c39e63010c87','eb2a6f9d712242ba9f5d0bd589c6d543','8332b89790634aea8b0ef0aa8b48b704','','','n','1970-01-01 00:00:00',-20000,100,-20000,100,NULL),
-	 ('331bac3c85fc4a808f9b853d9fcb42fb','eb2a6f9d712242ba9f5d0bd589c6d543','6c41a58ebac04bf3a48416118999b73e','','','n','1970-01-01 00:00:00',20000,100,20000,100,NULL),
-	 ('e0def90a05454325b00378109a0e32e9','32a565f24a3d4d2da4027f4d5d4d829b','646651de3c134b15aaa00dc376a3da83','','','n','1970-01-01 00:00:00',6000,100,6000,100,NULL),
-	 ('dc075451cc3f4cf39c440a1c59922369','32a565f24a3d4d2da4027f4d5d4d829b','6c41a58ebac04bf3a48416118999b73e','','','n','1970-01-01 00:00:00',-6000,100,-6000,100,NULL);
+	 ('ef8cae4d18be4a1b86436274ec5d7c02','da4dbc25f09d40abb447ee1f42db568f','653f596b292b42b08e5e5e7bc3961869','','','n','1970-01-01 00:00:00',-100000,100,-100000,100,NULL), -- account: Salary
+	 ('99b8c3c797254573b1c5be71e443b3c1','da4dbc25f09d40abb447ee1f42db568f','8332b89790634aea8b0ef0aa8b48b704','','','n','1970-01-01 00:00:00',100000,100,100000,100,NULL), -- account: Savings Account
+	 ('e7f166000b9b4b93a5b5c39e63010c87','eb2a6f9d712242ba9f5d0bd589c6d543','8332b89790634aea8b0ef0aa8b48b704','','','n','1970-01-01 00:00:00',-20000,100,-20000,100,NULL), -- account: Savings Account
+	 ('331bac3c85fc4a808f9b853d9fcb42fb','eb2a6f9d712242ba9f5d0bd589c6d543','6c41a58ebac04bf3a48416118999b73e','','','n','1970-01-01 00:00:00',20000,100,20000,100,NULL), -- account: Cash in Wallet
+	 ('e0def90a05454325b00378109a0e32e9','32a565f24a3d4d2da4027f4d5d4d829b','646651de3c134b15aaa00dc376a3da83','','','n','1970-01-01 00:00:00',6000,100,6000,100,NULL), -- account: Recreation
+	 ('dc075451cc3f4cf39c440a1c59922369','32a565f24a3d4d2da4027f4d5d4d829b','6c41a58ebac04bf3a48416118999b73e','','','n','1970-01-01 00:00:00',-6000,100,-6000,100,NULL); -- account: Cash in Wallet
