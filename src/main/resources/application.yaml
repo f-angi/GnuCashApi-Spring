@@ -10,15 +10,19 @@ pagination:
   sort.direction: desc
   sort.field: enterDate
 rsa:
-  private-key: file:/path/to/private/key
-  public-key: file:/path/to/public/key
+  private-key: file:C:/Users/francesco.angi/certs/private.pem
+  public-key: file:C:/Users/francesco.angi/certs/public.pem
 security:
   password: password
   username: fangi
 server:
-  port: 8087
+  port: 8089
+  ssl:
+    enabled: false
+    key-store: C:/Users/francesco.angi/development/projects/sandbox/gnucashapi/GnuCashApi/vox8339612.mynet.vodafone.it.p12
+    key-store-password: password
 spring:
   datasource:
-    password: gnucash
-    url: jdbc:postgresql://192.168.1.102/gnucash
+    password: jfgk0fjk49s
+    url: jdbc:postgresql://192.168.1.102/gnucash2
     username: gnucash

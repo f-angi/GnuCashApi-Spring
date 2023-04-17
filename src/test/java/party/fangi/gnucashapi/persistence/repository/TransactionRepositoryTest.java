@@ -1,12 +1,20 @@
 package party.fangi.gnucashapi.persistence.repository;
 
+import lombok.*;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.data.domain.Page;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.jdbc.Sql;
+import party.fangi.gnucashapi.model.AccountType;
+import party.fangi.gnucashapi.model.AmountPerPeriod;
 import party.fangi.gnucashapi.persistence.model.Transactions;
+
+import java.sql.Timestamp;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -29,7 +37,7 @@ class TransactionRepositoryTest {
     @Test
     void shouldFindByAccountName() {
         Page<Transactions> transactionsPage = transactionRepository.findBySplitAccountNameContainingIgnoreCase("recreation", null);
-        assertEquals(1, transactionsPage.getContent().size());
+        assertEquals(3, transactionsPage.getContent().size());
     }
 
     @Test
@@ -38,4 +46,14 @@ class TransactionRepositoryTest {
         assertEquals(1, transactionsPage.getContent().size());
     }
 
+    @Test
+    void shouldGetSumAccountAmountPerMonth() throws ParseException {
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-mm-dd");
+
+        List<AmountPerPeriod> amountPerPeriods = transactionRepository.sumAccountAmountPerMonth(AccountType.EXPENSE,
+                new Timestamp(simpleDateFormat.parse("2020-01-01").getTime()),
+                new Timestamp(simpleDateFormat.parse("2024-01-01").getTime()));
+
+        assertEquals(3, amountPerPeriods.size());
+    }
 }
