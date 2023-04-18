@@ -20,19 +20,25 @@ public interface TransactionRepository extends PagingAndSortingRepository<Transa
 
     Page<Transactions> findByDescriptionContainingIgnoreCaseAndSplitAccountNameContainingIgnoreCase(String description, String accountName, PageRequest pageRequest);
 
-    @Query("select new party.fangi.gnucashapi.model.AmountPerPeriod(to_date(cast(t.postDate as text), '%YYYY-%MM') as dateInterval, - sum(s.valueNum)) " +
+    @Query("select new party.fangi.gnucashapi.model.AmountPerPeriod(" +
+            "to_date(cast(timezone('UTC', t.postDate) as text), '%YYYY-MM') as dateInterval, " +
+            "- sum(s.valueNum)" +
+            ") " +
             " from Transactions t join t.split s join s.account a" +
             " where a.accountType = :#{#accountType.toString()}" +
-            " and t.postDate between :from and :to" +
-            " group by to_date(cast(t.postDate as text), '%YYYY-%MM')" +
-            " order by to_date(cast(t.postDate as text), '%YYYY-%MM')")
+            " and t.postDate >= :from and t.postDate < :to" +
+            " group by to_date(cast(timezone('UTC', t.postDate) as text), '%YYYY-MM')" +
+            " order by to_date(cast(timezone('UTC', t.postDate) as text), '%YYYY-MM')")
     List<AmountPerPeriod> sumAccountAmountPerMonth(AccountType accountType, Timestamp from, Timestamp to);
 
-    @Query("select new party.fangi.gnucashapi.model.AmountPerPeriod(to_date(cast(t.postDate as text), '%YYYY') as dateInterval, - sum(s.valueNum)) " +
+    @Query("select new party.fangi.gnucashapi.model.AmountPerPeriod(" +
+            "to_date(cast(timezone('UTC', t.postDate) as text), '%YYYY') as dateInterval, " +
+            "- sum(s.valueNum)" +
+            ") " +
             " from Transactions t join t.split s join s.account a" +
             " where a.accountType = :#{#accountType.toString()}" +
-            " and t.postDate between :from and :to" +
-            " group by to_date(cast(t.postDate as text), '%YYYY')" +
-            " order by to_date(cast(t.postDate as text), '%YYYY')")
+            " and t.postDate >= :from and t.postDate < :to" +
+            " group by to_date(cast(timezone('UTC', t.postDate) as text), '%YYYY')" +
+            " order by to_date(cast(timezone('UTC', t.postDate) as text), '%YYYY')")
     List<AmountPerPeriod> sumAccountAmountPerYear(AccountType accountType, Timestamp from, Timestamp to);
 }

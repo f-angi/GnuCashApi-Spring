@@ -20,13 +20,13 @@ public class ChartsController {
 
     @GetMapping(value = "/bar/month", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<ChartData> getIncomeExpenseBarChartPerMonth() {
-        ChartData incomeExpensePieChart = chartsService.getIncomeExpenseBarChartByMonth();
+        ChartData incomeExpensePieChart = chartsService.getIncomeExpenseBarChartPerMonth();
         return ResponseEntity.ok(incomeExpensePieChart);
     }
 
     @GetMapping(value = "/bar/year", produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<ChartData> getIncomeExpenseBarChartPerYear() {
-        ChartData incomeExpensePieChart = chartsService.getIncomeExpenseBarChartByYear();
+        ChartData incomeExpensePieChart = chartsService.getIncomeExpenseBarChartPerYear();
         return ResponseEntity.ok(incomeExpensePieChart);
     }
 

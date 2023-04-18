@@ -10,7 +10,10 @@ import party.fangi.gnucashapi.model.ChartData;
 import party.fangi.gnucashapi.persistence.repository.TransactionRepository;
 
 import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
 import java.time.LocalDateTime;
+import java.time.ZoneOffset;
+import java.time.ZonedDateTime;
 import java.time.temporal.ChronoUnit;
 import java.time.temporal.TemporalAdjusters;
 import java.util.List;
@@ -27,14 +30,16 @@ public class ChartsService {
      * @return
      */
     @Transactional
-    public ChartData getIncomeExpenseBarChartByMonth() {
-        LocalDateTime to = LocalDateTime.now().with(TemporalAdjusters.lastDayOfMonth());
-        LocalDateTime from = to.minus(1, ChronoUnit.YEARS);
+    public ChartData getIncomeExpenseBarChartPerMonth() {
+        LocalDateTime from = ZonedDateTime.now().with(TemporalAdjusters.firstDayOfYear()).minus(1, ChronoUnit.YEARS).truncatedTo(ChronoUnit.DAYS)
+                .withZoneSameInstant(ZoneOffset.UTC).toLocalDateTime();
+        LocalDateTime to = ZonedDateTime.now().with(TemporalAdjusters.firstDayOfNextMonth()).truncatedTo(ChronoUnit.DAYS)
+                .withZoneSameInstant(ZoneOffset.UTC).toLocalDateTime();
 
-        List<AmountPerPeriod> incomePerMonth = transactionRepository.sumAccountAmountPerMonth(AccountType.INCOME, Timestamp.valueOf(from), Timestamp.valueOf(to));
-        List<AmountPerPeriod> expensePerMonth = transactionRepository.sumAccountAmountPerMonth(AccountType.EXPENSE, Timestamp.valueOf(from), Timestamp.valueOf(to));
+        List<AmountPerPeriod> incomes = transactionRepository.sumAccountAmountPerMonth(AccountType.INCOME, Timestamp.valueOf(from), Timestamp.valueOf(to));
+        List<AmountPerPeriod> expenses = transactionRepository.sumAccountAmountPerMonth(AccountType.EXPENSE, Timestamp.valueOf(from), Timestamp.valueOf(to));
 
-        return getIncomeExpenseBarChart(incomePerMonth, expensePerMonth);
+        return getIncomeExpenseBarChart(incomes, expenses, new SimpleDateFormat("yyyy-MM"));
     }
 
     /**
@@ -43,27 +48,29 @@ public class ChartsService {
      * @return
      */
     @Transactional
-    public ChartData getIncomeExpenseBarChartByYear() {
-        LocalDateTime to = LocalDateTime.now().with(TemporalAdjusters.lastDayOfYear());
-        LocalDateTime from = to.minus(10, ChronoUnit.YEARS);
+    public ChartData getIncomeExpenseBarChartPerYear() {
+        LocalDateTime to = ZonedDateTime.now().with(TemporalAdjusters.lastDayOfYear()).plusDays(1).truncatedTo(ChronoUnit.DAYS)
+                .withZoneSameInstant(ZoneOffset.UTC).toLocalDateTime();
+        LocalDateTime from = ZonedDateTime.now().with(TemporalAdjusters.firstDayOfYear()).minus(10, ChronoUnit.YEARS).truncatedTo(ChronoUnit.DAYS)
+                .withZoneSameInstant(ZoneOffset.UTC).toLocalDateTime();
 
-        List<AmountPerPeriod> incomePerMonth = transactionRepository.sumAccountAmountPerYear(AccountType.INCOME, Timestamp.valueOf(from), Timestamp.valueOf(to));
-        List<AmountPerPeriod> expensePerMonth = transactionRepository.sumAccountAmountPerYear(AccountType.EXPENSE, Timestamp.valueOf(from), Timestamp.valueOf(to));
+        List<AmountPerPeriod> incomes = transactionRepository.sumAccountAmountPerYear(AccountType.INCOME, Timestamp.valueOf(from), Timestamp.valueOf(to));
+        List<AmountPerPeriod> expenses = transactionRepository.sumAccountAmountPerYear(AccountType.EXPENSE, Timestamp.valueOf(from), Timestamp.valueOf(to));
 
-        return getIncomeExpenseBarChart(incomePerMonth, expensePerMonth);
+        return getIncomeExpenseBarChart(incomes, expenses, new SimpleDateFormat("yyyy"));
     }
 
-    private ChartData getIncomeExpenseBarChart(List<AmountPerPeriod> incomePerMonth, List<AmountPerPeriod> expensePerMonth) {
-        List<AmountPerPeriod> profitPerMonth = StreamUtils.zip(incomePerMonth.stream(), expensePerMonth.stream(),
+    private ChartData getIncomeExpenseBarChart(List<AmountPerPeriod> incomes, List<AmountPerPeriod> expenses, SimpleDateFormat sdf) {
+        List<AmountPerPeriod> profitPerMonth = StreamUtils.zip(incomes.stream(), expenses.stream(),
                 (x, y) ->
                         new AmountPerPeriod(x.getPeriod(), x.getAmount() + y.getAmount())
         ).toList();
 
         ChartData chartData = new ChartData();
-        chartData.getDatasets().add(new ChartData.DataSet("income", incomePerMonth.stream().map(x -> x.getAmount() / 100f).toList()));
-        chartData.getDatasets().add(new ChartData.DataSet("expense", expensePerMonth.stream().map(x -> x.getAmount() / 100f).toList()));
+        chartData.getDatasets().add(new ChartData.DataSet("income", incomes.stream().map(x -> x.getAmount() / 100f).toList()));
+        chartData.getDatasets().add(new ChartData.DataSet("expense", expenses.stream().map(x -> x.getAmount() / 100f).toList()));
         chartData.getDatasets().add(new ChartData.DataSet("profit", profitPerMonth.stream().map(x -> x.getAmount() / 100f).toList()));
-        chartData.setLabels(incomePerMonth.stream().map(x -> x.getPeriod().toString()).toList());
+        chartData.setLabels(incomes.stream().map(x -> sdf.format(x.getPeriod())).toList());
 
         return chartData;
     }

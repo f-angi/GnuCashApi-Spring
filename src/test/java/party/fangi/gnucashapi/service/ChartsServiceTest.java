@@ -1,23 +1,14 @@
 package party.fangi.gnucashapi.service;
 
-import lombok.Data;
-import lombok.EqualsAndHashCode;
-import lombok.ToString;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.jdbc.Sql;
-import party.fangi.gnucashapi.model.AccountType;
-import party.fangi.gnucashapi.model.AmountPerPeriod;
 import party.fangi.gnucashapi.model.ChartData;
 
-import java.sql.Timestamp;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
-import java.util.List;
-
-import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
 @ActiveProfiles("test")
@@ -32,7 +23,7 @@ class ChartsServiceTest {
     void getIncomeExpensePieChart() throws ParseException {
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-mm-dd");
 
-        ChartData incomeExpensePieChart = chartsService.getIncomeExpenseBarChartByMonth();
+        ChartData incomeExpensePieChart = chartsService.getIncomeExpenseBarChartPerMonth();
 
         // FIXME
         int x = 2;
