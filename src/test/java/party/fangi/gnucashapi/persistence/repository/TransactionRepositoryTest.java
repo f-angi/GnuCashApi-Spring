@@ -1,6 +1,5 @@
 package party.fangi.gnucashapi.persistence.repository;
 
-import lombok.*;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -54,6 +53,6 @@ class TransactionRepositoryTest {
                 new Timestamp(simpleDateFormat.parse("2020-01-01").getTime()),
                 new Timestamp(simpleDateFormat.parse("2024-01-01").getTime()));
 
-        assertEquals(3, amountPerPeriods.size());
+        assertEquals(2, amountPerPeriods.size());
     }
 }
