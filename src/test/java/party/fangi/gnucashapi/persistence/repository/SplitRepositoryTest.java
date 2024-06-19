@@ -25,7 +25,7 @@ class SplitRepositoryTest {
     void shouldFindSplitByGuid() {
         List<Splits> splitsList = splitRepository.findByGuid("ef8cae4d18be4a1b86436274ec5d7c02");
         assertEquals(1, splitsList.size());
-        assertEquals("da4dbc25f09d40abb447ee1f42db568f", splitsList.get(0).getTransaction().getGuid());
+        assertEquals("da4dbc25f09d40abb447ee1f42db568f---", splitsList.get(0).getTransaction().getGuid());
     }
 
     @Test
