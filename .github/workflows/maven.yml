@@ -33,6 +33,7 @@ jobs:
       
   deploy:
     needs: build
+    environment: prod
     runs-on: ubuntu-latest    
     steps:
     - name: install ssh keys
