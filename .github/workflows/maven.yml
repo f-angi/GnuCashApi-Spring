@@ -54,6 +54,6 @@ jobs:
         name: jar
     - name: connect and pull
       # run: ssh ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} "cd ${{ secrets.WORKING_DIR }} && git checkout ${{ secrets.MAIN_BRANCH }} && git pull && exit"
-      run: scp -P ${{ secrets.SSH_PORT }} gnucash-api.jar ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }}:${{ secrets.WORKING_DIR }} && systemctl restart gnucash-api.service
+      run: scp -P ${{ secrets.SSH_PORT }} gnucash-api.jar ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }}:${{ secrets.WORKING_DIR }} && sudo systemctl restart gnucash-api.service
     - name: cleanup
       run: rm -rf ~/.ssh
