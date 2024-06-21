@@ -56,6 +56,6 @@ jobs:
       # run: ssh ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} "cd ${{ secrets.WORKING_DIR }} && git checkout ${{ secrets.MAIN_BRANCH }} && git pull && exit"
       run: scp -P ${{ secrets.SSH_PORT }} gnucash-api.jar ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }}:${{ secrets.WORKING_DIR }}
     - name: restart
-      run: ssh ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} "sudo systemctl restart gnucash-api.service && exit"
+      run: ssh -p ${{ secrets.SSH_PORT }} ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} "sudo systemctl restart gnucash-api.service && exit"
     - name: cleanup
       run: rm -rf ~/.ssh
