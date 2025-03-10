@@ -19,8 +19,8 @@ server:
   port: 8089
   ssl:
     enabled: false
-    key-store: C:/Users/francesco.angi/development/projects/sandbox/gnucashapi/GnuCashApi/vox8339612.mynet.vodafone.it.p12
-    key-store-password: password
+    certificate: file:fullchain.pem
+    certificate-private-key: file:privkey.pem
 spring:
   datasource:
     password: jfgk0fjk49s

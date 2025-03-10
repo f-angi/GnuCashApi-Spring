@@ -42,6 +42,7 @@ public class SecurityConfig {
 
         httpSecurity
                 .csrf(AbstractHttpConfigurer::disable)
+                .cors(Customizer.withDefaults())
                 .authorizeHttpRequests(
                         auth -> auth
                                 .requestMatchers(swaggerPaths).permitAll()
