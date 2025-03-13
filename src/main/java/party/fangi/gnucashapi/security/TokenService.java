@@ -19,7 +19,7 @@ public class TokenService {
 
     private final JwtEncoder encoder;
 
-    @Value("${jwt.duration-minutes}")
+    @Value("${application.jwt-duration-minutes}")
     private int duration;
 
     public String generateToken(Authentication authentication) {

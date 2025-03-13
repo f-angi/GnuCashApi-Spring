@@ -18,13 +18,13 @@ import party.fangi.gnucashapi.util.PageRequestHelper;
 @RequiredArgsConstructor
 public class ExpensesService {
 
-    @Value("${pagination.page.size}")
+    @Value("${application.pagination.page.size}")
     private int defaultPageSize;
 
-    @Value("${pagination.sort.field}")
+    @Value("${application.pagination.sort.field}")
     private String defaultSortField;
 
-    @Value("${pagination.sort.direction}")
+    @Value("${application.pagination.sort.direction}")
     private String defaultSortDirection;
 
     private final TransactionRepository transactionRepository;

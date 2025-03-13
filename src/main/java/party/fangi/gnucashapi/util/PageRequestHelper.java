@@ -8,13 +8,13 @@ import party.fangi.gnucashapi.model.Sort;
 @Component
 public class PageRequestHelper {
 
-    @Value("${pagination.page.size}")
+    @Value("${application.pagination.page.size}")
     private int defaultPageSize;
 
-    @Value("${pagination.sort.field}")
+    @Value("${application.pagination.sort.field}")
     private String defaultSortField;
 
-    @Value("${pagination.sort.direction}")
+    @Value("${application.pagination.sort.direction}")
     private String defaultSortDirection;
 
     public PageRequest mapSearchToPageRequest(Sort sort) {
