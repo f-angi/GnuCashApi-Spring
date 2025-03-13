@@ -1,20 +1,25 @@
-cors:
-  origins: http://192.168.1.5:4200
-jwt:
-  duration-minutes: 20
+application:
+  cors-origins: http://localhost:4200
+  jwt-duration-minutes: 20
+  pagination:
+    page.size: 10
+    sort.direction: desc
+    sort.field: enterDate
+  security:
+    password: password
+    username: foo
+  google-auth:
+    allowed-emails: foo@foo.com
+    redirect-url:
+      success: http://localhost:4200/#/login?token=
+      failure: http://localhost:4200/#/login?failed
+
 logging:
   level:
     root: info
-pagination:
-  page.size: 10
-  sort.direction: desc
-  sort.field: enterDate
 rsa:
-  private-key: file:C:/Users/francesco.angi/certs/private.pem
-  public-key: file:C:/Users/francesco.angi/certs/public.pem
-security:
-  password: password
-  username: fangi
+  private-key: file:private.pem
+  public-key: file:public.pem
 server:
   port: 8089
   ssl:
@@ -26,3 +31,11 @@ spring:
     password: jfgk0fjk49s
     url: jdbc:postgresql://192.168.1.102/gnucash2
     username: gnucash
+  security:
+    oauth2:
+      client:
+        registration:
+          google:
+            client-id: id
+            client-secret: secret
+            scope: email

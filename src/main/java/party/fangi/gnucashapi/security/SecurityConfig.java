@@ -30,15 +30,16 @@ public class SecurityConfig {
 
     private final RsaKeyProperties rsaKeys;
 
-    @Value("${security.username}")
+    @Value("${application.security.username}")
     private String username;
 
-    @Value("${security.password}")
+    @Value("${application.security.password}")
     private String password;
 
     @Bean
-    public SecurityFilterChain filterChain(HttpSecurity httpSecurity) throws Exception {
+    public SecurityFilterChain filterChain(HttpSecurity httpSecurity, AuthSuccessHandler authSuccessHandler) throws Exception {
         String[] swaggerPaths = {"/swagger-ui.html", "/v3/api-docs/**", "/swagger-ui/**", "/webjars/swagger-ui/**"};
+        String[] oauth2Paths = {"/oauth2-code"};
 
         httpSecurity
                 .csrf(AbstractHttpConfigurer::disable)
@@ -46,10 +47,12 @@ public class SecurityConfig {
                 .authorizeHttpRequests(
                         auth -> auth
                                 .requestMatchers(swaggerPaths).permitAll()
+                                .requestMatchers(oauth2Paths).permitAll()
                                 .anyRequest().authenticated()
                 )
                 .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .oauth2ResourceServer(configurer -> configurer.jwt(Customizer.withDefaults()))
+                .oauth2Login(o -> o.successHandler(authSuccessHandler))
                 .httpBasic(Customizer.withDefaults());
         return httpSecurity.build();
     }

@@ -13,7 +13,7 @@ import party.fangi.gnucashapi.security.TokenService;
 @RestController
 @RequiredArgsConstructor
 @Slf4j
-@CrossOrigin(origins = "${cors.origins}", maxAge = 3600)
+@CrossOrigin(origins = "${application.cors-origins}", maxAge = 3600)
 public class AuthController {
 
     private final TokenService tokenService;

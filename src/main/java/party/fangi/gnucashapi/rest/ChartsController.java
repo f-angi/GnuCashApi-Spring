@@ -12,7 +12,7 @@ import party.fangi.gnucashapi.service.ChartsService;
 
 @RestController
 @RequestMapping("api/charts")
-@CrossOrigin(origins = "${cors.origins}", maxAge = 3600)
+@CrossOrigin(origins = "${application.cors-origins}", maxAge = 3600)
 @RequiredArgsConstructor
 public class ChartsController {
 
