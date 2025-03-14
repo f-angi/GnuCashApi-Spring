@@ -1,16 +1,55 @@
-spring:
-  datasource:
-    url: jdbc:tc:postgresql:14.4:////gnucash
-#    url: jdbc:tc:mysql:8.0.30:////gnucash
-#    driver-class-name: org.testcontainers.jdbc.ContainerDatabaseDriver
-  jpa:
-    hibernate:
-      ddl-auto: create
-#    defer-datasource-initialization: 'true'
-#  sql:
-#    init:
-#      mode: always
+#spring:
+#  datasource:
+#    url: jdbc:tc:postgresql:14.4:////gnucash
+#  jpa:
+#    hibernate:
+#      ddl-auto: create
+#rsa:
+#  private-key: classpath:certs/private.pem
+#  public-key: classpath:certs/public.pem
 
+application:
+  cors-origins: http://localhost:4200
+  jwt-duration-minutes: 20
+  pagination:
+    page.size: 10
+    sort.direction: desc
+    sort.field: enterDate
+  security:
+    password: password
+    username: foo
+  google-auth:
+    allowed-emails: foo@foo.com
+    redirect-url:
+      success: http://localhost:4200/#/login?token=
+      failure: http://localhost:4200/#/login?failed
+
+logging:
+  level:
+    root: info
 rsa:
   private-key: classpath:certs/private.pem
   public-key: classpath:certs/public.pem
+server:
+  port: 8089
+  ssl:
+    enabled: false
+    certificate: file:fullchain.pem
+    certificate-private-key: file:privkey.pem
+spring:
+  datasource:
+    password: jfgk0fjk49s
+    url: jdbc:tc:postgresql:14.4:////gnucash
+    username: gnucash
+  jpa:
+    hibernate:
+      ddl-auto: create
+
+  security:
+    oauth2:
+      client:
+        registration:
+          google:
+            client-id: id
+            client-secret: secret
+            scope: email
