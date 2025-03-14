@@ -41,4 +41,27 @@ public interface TransactionRepository extends PagingAndSortingRepository<Transa
             " group by to_date(cast(timezone('UTC', t.postDate) as text), '%YYYY')" +
             " order by to_date(cast(timezone('UTC', t.postDate) as text), '%YYYY')")
     List<AmountPerPeriod> sumAccountAmountPerYear(AccountType accountType, Timestamp from, Timestamp to);
+
+    @Query("SELECT DISTINCT t FROM Transactions t " +
+            "JOIN t.split s " +
+            "JOIN s.account a " +
+            "WHERE (:description IS NULL OR :description = '' OR LOWER(t.description) LIKE LOWER(CONCAT('%', :description, '%'))) " +
+            "AND (:accountName IS NULL OR :accountName = '' OR LOWER(a.name) LIKE LOWER(CONCAT('%', :accountName, '%'))) " +
+            "AND EXISTS (SELECT 1 FROM Splits s2 WHERE s2.transaction = t AND s2.valueNum >= 0)")
+    Page<Transactions> findExpenseTransactions(String description, String accountName, PageRequest pageRequest);
+
+    @Query("SELECT DISTINCT t FROM Transactions t " +
+            "JOIN t.split s " +
+            "JOIN s.account a " +
+            "WHERE (:description IS NULL OR :description = '' OR LOWER(t.description) LIKE LOWER(CONCAT('%', :description, '%'))) " +
+            "AND (:accountName IS NULL OR :accountName = '' OR LOWER(a.name) LIKE LOWER(CONCAT('%', :accountName, '%'))) " +
+            "AND EXISTS (SELECT 1 FROM Splits s2 WHERE s2.transaction = t AND s2.valueNum < 0)")
+    Page<Transactions> findIncomeTransactions(String description, String accountName, PageRequest pageRequest);
+
+    @Query("SELECT DISTINCT t FROM Transactions t " +
+            "JOIN t.split s " +
+            "JOIN s.account a " +
+            "WHERE (:description IS NULL OR :description = '' OR LOWER(t.description) LIKE LOWER(CONCAT('%', :description, '%'))) " +
+            "AND (:accountName IS NULL OR :accountName = '' OR LOWER(a.name) LIKE LOWER(CONCAT('%', :accountName, '%')))")
+    Page<Transactions> findAllTransactionsWithFilters(String description, String accountName, PageRequest pageRequest);
 }

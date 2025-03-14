@@ -9,6 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
 import party.fangi.gnucashapi.model.Expense;
 import party.fangi.gnucashapi.model.Sort;
+import party.fangi.gnucashapi.model.TransactionType;
 import party.fangi.gnucashapi.persistence.model.Splits;
 import party.fangi.gnucashapi.persistence.model.Transactions;
 import party.fangi.gnucashapi.persistence.repository.TransactionRepository;
@@ -31,7 +32,7 @@ public class ExpensesService {
     private final PageRequestHelper pageRequestHelper;
 
     @Transactional
-    public Page<Expense> getExpensesByDescriptionAndAccountName(String description, String accountName) {
+    public Page<Expense> getExpensesByDescriptionAndAccountName(String description, String accountName, TransactionType type) {
         Sort sort = Sort.builder()
                 .pageNumber(0)
                 .pageSize(defaultPageSize)
@@ -39,27 +40,32 @@ public class ExpensesService {
                 .sortDirection(defaultSortDirection)
                 .build();
 
-        return getExpenses(description, accountName, sort);
+        return getExpensesByDescriptionAndAccountNameAndSort(description, accountName, type, sort);
     }
 
     @Transactional
-    public Page<Expense> getExpensesByDescriptionAndAccountNameAndSort(String description, String accountName, Sort sort) {
-        return getExpenses(description, accountName, sort);
+    public Page<Expense> getExpensesByDescriptionAndAccountNameAndSort(String description, String accountName, TransactionType type, Sort sort) {
+        return getExpenses(description, accountName, type, sort);
     }
 
-    private Page<Expense> getExpenses(String description, String accountName, Sort sort) {
+    private Page<Expense> getExpenses(String description, String accountName, TransactionType type, Sort sort) {
         PageRequest pageRequest = pageRequestHelper.mapSearchToPageRequest(sort);
 
-        Page<Transactions> transactionsPage;
-        if (StringUtils.hasText(description) && StringUtils.hasText(accountName)) {
-            transactionsPage = transactionRepository.findByDescriptionContainingIgnoreCaseAndSplitAccountNameContainingIgnoreCase(description, accountName, pageRequest);
-        } else if (StringUtils.hasText(description)) {
-            transactionsPage = transactionRepository.findByDescriptionContainingIgnoreCase(description, pageRequest);
-        } else if (StringUtils.hasText(accountName)) {
-            transactionsPage = transactionRepository.findBySplitAccountNameContainingIgnoreCase(accountName, pageRequest);
-        } else {
-            transactionsPage = transactionRepository.findAll(pageRequest);
-        }
+        Page<Transactions> transactionsPage = switch (type) {
+            case EXPENSE -> transactionRepository.findExpenseTransactions(
+                    StringUtils.hasText(description) ? description : null,
+                    StringUtils.hasText(accountName) ? accountName : null,
+                    pageRequest);
+            case INCOME -> transactionRepository.findIncomeTransactions(
+                    StringUtils.hasText(description) ? description : null,
+                    StringUtils.hasText(accountName) ? accountName : null,
+                    pageRequest);
+            default -> transactionRepository.findAllTransactionsWithFilters(
+                    StringUtils.hasText(description) ? description : null,
+                    StringUtils.hasText(accountName) ? accountName : null,
+                    pageRequest
+            );
+        };
 
         return transactionsPage.map(this::mapTransactionsToExpense);
     }

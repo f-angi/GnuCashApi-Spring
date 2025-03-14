@@ -4,6 +4,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.jdbc.Sql;
 import party.fangi.gnucashapi.model.AccountType;
@@ -46,7 +47,39 @@ class TransactionRepositoryTest {
     }
 
     @Test
-    void shouldGetSumAccountAmountPerMonth() throws ParseException {
+    void shouldFindExpenseTransactions() {
+        Page<Transactions> expenseTransactions = transactionRepository.findExpenseTransactions("dinner", "recreation", null);
+        assertEquals(1, expenseTransactions.getContent().size());
+        assertEquals("32a565f24a3d4d2da4027f4d5d4d829b", expenseTransactions.getContent().get(0).getGuid());
+    }
+
+    @Test
+    void shouldFindIncomeTransactions() {
+        Page<Transactions> incomeTransactions = transactionRepository.findIncomeTransactions("salary", "salary", null);
+        assertEquals(1, incomeTransactions.getContent().size());
+        assertEquals("da4dbc25f09d40abb447ee1f42db568f", incomeTransactions.getContent().get(0).getGuid());
+    }
+
+    @Test
+    void shouldFindAllTransactionsWithFilters() {
+        Page<Transactions> allTransactions = transactionRepository.findAllTransactionsWithFilters("dinner", "recreation", null);
+        assertEquals(1, allTransactions.getContent().size());
+        assertEquals("32a565f24a3d4d2da4027f4d5d4d829b", allTransactions.getContent().get(0).getGuid());
+    }
+
+    @Test
+    void shouldSumAccountAmountPerYear() throws ParseException {
+        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-mm-dd");
+
+        List<AmountPerPeriod> amountPerPeriods = transactionRepository.sumAccountAmountPerYear(AccountType.EXPENSE,
+                new Timestamp(simpleDateFormat.parse("2020-01-01").getTime()),
+                new Timestamp(simpleDateFormat.parse("2024-01-01").getTime()));
+
+        assertEquals(2, amountPerPeriods.size());
+    }
+
+    @Test
+    void shouldSumAccountAmountPerMonth() throws ParseException {
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-mm-dd");
 
         List<AmountPerPeriod> amountPerPeriods = transactionRepository.sumAccountAmountPerMonth(AccountType.EXPENSE,
@@ -55,4 +88,11 @@ class TransactionRepositoryTest {
 
         assertEquals(2, amountPerPeriods.size());
     }
+
+    @Test
+    void shouldFindAllTransactionsWithPagination() {
+        Page<Transactions> allTransactions = transactionRepository.findAll(PageRequest.of(0, Integer.MAX_VALUE));
+        assertEquals(5, allTransactions.getContent().size());
+    }
+
 }

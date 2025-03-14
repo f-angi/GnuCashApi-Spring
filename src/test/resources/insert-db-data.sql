@@ -71,11 +71,11 @@ INSERT INTO public.accounts (guid,name,account_type,commodity_guid,commodity_scu
 	 ('5153d82779cb4a4687c9d98abf24f077','Opening Balances','EQUITY','301eba2ead67436ab5c4227673ec9737',100,0,'3109e83d1ffe46de987af8e925df99ba','','Opening Balances',0,0),
 	 ('019b2bf67b7c490b86fe3b948e56d6fa','Template Root','ROOT',NULL,0,0,NULL,'','',0,0);
 INSERT INTO public.transactions (guid,currency_guid,num,post_date,enter_date,description) VALUES
-	 ('da4dbc25f09d40abb447ee1f42db568f','301eba2ead67436ab5c4227673ec9737','','2022-09-01 10:59:00','2022-09-01 15:20:53','salary'),
-	 ('eb2a6f9d712242ba9f5d0bd589c6d543','301eba2ead67436ab5c4227673ec9737','','2022-09-01 10:59:00','2022-09-01 15:21:12','withdrawal'),
+	 ('da4dbc25f09d40abb447ee1f42db568f','301eba2ead67436ab5c4227673ec9737','','2022-09-01 10:58:00','2022-09-01 15:20:53','salary'),
+	 ('eb2a6f9d712242ba9f5d0bd589c6d543','301eba2ead67436ab5c4227673ec9737','','2022-09-01 10:57:00','2022-09-01 15:21:12','withdrawal'),
 	 ('32a565f24a3d4d2da4027f4d5d4d829b','301eba2ead67436ab5c4227673ec9737','','2022-09-01 10:59:00','2022-09-01 15:22:08','dinner'),
-	 ('32a565f24a3d4d2da4027f4d5d4d829c','301eba2ead67436ab5c4227673ec9737','','2023-01-03 11:58:00','2023-01-03 15:22:08','lunch'),
-	 ('32a565f24a3d4d2da4027f4d5d4d829d','301eba2ead67436ab5c4227673ec9737','','2022-09-01 10:59:00','2022-10-13 15:22:08','breakfast');
+	 ('32a565f24a3d4d2da4027f4d5d4d829c','301eba2ead67436ab5c4227673ec9737','','2023-01-03 11:54:00','2023-01-03 15:22:08','lunch'),
+	 ('32a565f24a3d4d2da4027f4d5d4d829d','301eba2ead67436ab5c4227673ec9737','','2022-09-01 10:55:00','2022-10-13 15:22:08','breakfast');
 INSERT INTO public.splits (guid,tx_guid,account_guid,memo,"action",reconcile_state,reconcile_date,value_num,value_denom,quantity_num,quantity_denom,lot_guid) VALUES
 	 ('ef8cae4d18be4a1b86436274ec5d7c02','da4dbc25f09d40abb447ee1f42db568f','653f596b292b42b08e5e5e7bc3961869','','','n','1970-01-01 00:00:00',-100000,100,-100000,100,NULL), -- account: Salary
 	 ('99b8c3c797254573b1c5be71e443b3c1','da4dbc25f09d40abb447ee1f42db568f','8332b89790634aea8b0ef0aa8b48b704','','','n','1970-01-01 00:00:00',100000,100,100000,100,NULL), -- account: Savings Account
