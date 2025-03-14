@@ -1,41 +1,41 @@
 application:
-  cors-origins: http://localhost:4200
-  jwt-duration-minutes: 20
+  cors-origins: ${CORS_ORIGINS}
+  jwt-duration-minutes: 10
   pagination:
     page.size: 10
     sort.direction: desc
     sort.field: enterDate
   security:
-    password: password
-    username: foo
+    password: ${APP_SECURITY_PASSWORD}
+    username: ${APP_SECURITY_USERNAME}
   google-auth:
-    allowed-emails: foo@foo.com
+    allowed-emails: ${GOOGLE_ALLOWED_EMAILS}
     redirect-url:
-      success: http://localhost:4200/#/login?token=
-      failure: http://localhost:4200/#/login?failed
+      success: ${GOOGLE_AUTH_SUCCESS_URL}
+      failure: ${GOOGLE_AUTH_FAILURE_URL}
 
 logging:
   level:
     root: info
 rsa:
-  private-key: file:private.pem
-  public-key: file:public.pem
+  private-key: ${RSA_PRIVATE_KEY_PATH}
+  public-key: ${RSA_PUBLIC_KEY_PATH}
 server:
-  port: 8089
+  port: ${SERVER_PORT}
   ssl:
-    enabled: false
-    certificate: file:fullchain.pem
-    certificate-private-key: file:privkey.pem
+    enabled: ${SSL_ENABLED}
+    certificate: ${SSL_CERTIFICATE_PATH}
+    certificate-private-key: ${SSL_PRIVATE_KEY_PATH}
 spring:
   datasource:
-    password: jfgk0fjk49s
-    url: jdbc:postgresql://192.168.1.102/gnucash2
-    username: gnucash
+    password: ${DB_PASSWORD}
+    url: ${DB_URL}
+    username: ${DB_USERNAME}
   security:
     oauth2:
       client:
         registration:
           google:
-            client-id: id
-            client-secret: secret
+            client-id: ${GOOGLE_CLIENT_ID}
+            client-secret: ${GOOGLE_CLIENT_SECRET}
             scope: email
