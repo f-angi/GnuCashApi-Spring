@@ -1,5 +1,6 @@
 package party.fangi.gnucashapi.rest;
 
+import io.swagger.v3.oas.annotations.security.SecurityRequirement;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.MediaType;
@@ -19,6 +20,7 @@ public class AuthController {
     private final TokenService tokenService;
 
     @PostMapping(value = "/token", produces = MediaType.TEXT_PLAIN_VALUE)
+    @SecurityRequirement(name = "basic")
     public ResponseEntity<String> token(Authentication authentication) {
         log.debug("Token requested for user: '{}'", authentication.getName());
         String token = tokenService.generateToken(authentication);
