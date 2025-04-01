@@ -14,7 +14,7 @@ application:
   pagination:
     page.size: 10
     sort.direction: desc
-    sort.field: enterDate
+    sort.field: postDate
   security:
     password: password
     username: foo

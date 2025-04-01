@@ -34,11 +34,11 @@ class ExpensesControllerTest {
         mockMvc.perform(get("/api/expenses")
                 .param("transactionType", "INCOME"))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.content").isArray());
+                .andExpect(jsonPath("$.content[0].description").value("salary"));
 
         mockMvc.perform(get("/api/expenses")
                 .param("transactionType", "ALL"))
                 .andExpect(status().isOk())
-                .andExpect(jsonPath("$.content").isArray());
+                .andExpect(jsonPath("$.content[0].description").value("withdrawal"));
     }
 }

@@ -47,7 +47,7 @@ public interface TransactionRepository extends PagingAndSortingRepository<Transa
             "JOIN s.account a " +
             "WHERE (:description IS NULL OR :description = '' OR LOWER(t.description) LIKE LOWER(CONCAT('%', :description, '%'))) " +
             "AND (:accountName IS NULL OR :accountName = '' OR LOWER(a.name) LIKE LOWER(CONCAT('%', :accountName, '%'))) " +
-            "AND EXISTS (SELECT 1 FROM Splits s2 WHERE s2.transaction = t AND s2.valueNum >= 0)")
+            "AND a.accountType = 'EXPENSE'")
     Page<Transactions> findExpenseTransactions(String description, String accountName, PageRequest pageRequest);
 
     @Query("SELECT DISTINCT t FROM Transactions t " +
@@ -55,7 +55,7 @@ public interface TransactionRepository extends PagingAndSortingRepository<Transa
             "JOIN s.account a " +
             "WHERE (:description IS NULL OR :description = '' OR LOWER(t.description) LIKE LOWER(CONCAT('%', :description, '%'))) " +
             "AND (:accountName IS NULL OR :accountName = '' OR LOWER(a.name) LIKE LOWER(CONCAT('%', :accountName, '%'))) " +
-            "AND EXISTS (SELECT 1 FROM Splits s2 WHERE s2.transaction = t AND s2.valueNum < 0)")
+            "AND a.accountType = 'INCOME'")
     Page<Transactions> findIncomeTransactions(String description, String accountName, PageRequest pageRequest);
 
     @Query("SELECT DISTINCT t FROM Transactions t " +
@@ -63,5 +63,5 @@ public interface TransactionRepository extends PagingAndSortingRepository<Transa
             "JOIN s.account a " +
             "WHERE (:description IS NULL OR :description = '' OR LOWER(t.description) LIKE LOWER(CONCAT('%', :description, '%'))) " +
             "AND (:accountName IS NULL OR :accountName = '' OR LOWER(a.name) LIKE LOWER(CONCAT('%', :accountName, '%')))")
-    Page<Transactions> findAllTransactionsWithFilters(String description, String accountName, PageRequest pageRequest);
+    Page<Transactions> findTransactions(String description, String accountName, PageRequest pageRequest);
 }

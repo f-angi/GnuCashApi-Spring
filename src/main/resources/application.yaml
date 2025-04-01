@@ -4,7 +4,7 @@ application:
   pagination:
     page.size: 10
     sort.direction: desc
-    sort.field: enterDate
+    sort.field: postDate
   security:
     password: ${APP_SECURITY_PASSWORD}
     username: ${APP_SECURITY_USERNAME}

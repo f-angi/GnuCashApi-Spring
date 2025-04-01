@@ -61,7 +61,7 @@ public class ExpensesService {
                     StringUtils.hasText(description) ? description : null,
                     StringUtils.hasText(accountName) ? accountName : null,
                     pageRequest);
-            default -> transactionRepository.findAllTransactionsWithFilters(
+            default -> transactionRepository.findTransactions(
                     StringUtils.hasText(description) ? description : null,
                     StringUtils.hasText(accountName) ? accountName : null,
                     pageRequest

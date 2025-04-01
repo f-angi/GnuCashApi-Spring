@@ -19,10 +19,10 @@ public class PageRequestHelper {
     private String defaultSortDirection;
 
     public PageRequest mapSearchToPageRequest(Sort sort) {
-        final int pageSize = sort.getPageSize() == null ? defaultPageSize : sort.getPageSize();
         final int pageNumber = sort.getPageNumber() == null ? 0 : sort.getPageNumber();
+        final int pageSize = sort.getPageSize() == null ? defaultPageSize : sort.getPageSize();
+        final Direction sortDirection = sort.getSortDirection() == null ? Direction.fromString(defaultSortDirection) : sort.getSortDirection();
         final String sortField = sort.getSortField() == null ? defaultSortField : sort.getSortField();
-        final Direction sortDirection = sort.getSortDirection() == null ? Direction.ASC : sort.getSortDirection();
 
         return PageRequest.of(pageNumber, pageSize, sortDirection, sortField);
     }
