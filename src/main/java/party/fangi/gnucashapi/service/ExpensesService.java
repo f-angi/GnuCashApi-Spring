@@ -4,6 +4,7 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Sort.Direction;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.StringUtils;
@@ -37,7 +38,7 @@ public class ExpensesService {
                 .pageNumber(0)
                 .pageSize(defaultPageSize)
                 .sortField(defaultSortField)
-                .sortDirection(defaultSortDirection)
+                .sortDirection(Direction.fromString(defaultSortDirection))
                 .build();
 
         return getExpensesByDescriptionAndAccountNameAndSort(description, accountName, type, sort);

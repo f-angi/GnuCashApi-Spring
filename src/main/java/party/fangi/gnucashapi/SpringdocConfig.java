@@ -17,7 +17,7 @@ import java.util.TreeMap;
 
 @Configuration
 @OpenAPIDefinition(servers = {
-        @Server(url = "http://localhost:${server.port}/", description = "GnuCash API definition")
+        @Server(url = "http://localhost:${server.port}", description = "GnuCash API definition")
 })
 public class SpringdocConfig {
 
