@@ -24,8 +24,5 @@ class ChartsServiceTest {
         SimpleDateFormat simpleDateFormat = new SimpleDateFormat("yyyy-mm-dd");
 
         ChartData incomeExpensePieChart = chartsService.getIncomeExpenseBarChartPerMonth();
-
-        // FIXME
-        int x = 2;
     }
 }

@@ -28,6 +28,6 @@ public class Transactions {
     @Column(name = "description", nullable = true, length = 2048)
     private String description;
 
-    @OneToMany(mappedBy = "transaction")
+    @OneToMany(mappedBy = "transaction", fetch = FetchType.EAGER)
     private List<Splits> split;
 }

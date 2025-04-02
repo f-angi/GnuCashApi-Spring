@@ -1,4 +1,4 @@
-package party.fangi.gnucashapi.rest;
+package party.fangi.gnucashapi.rest.dto;
 
 
 import org.springframework.data.domain.Page;

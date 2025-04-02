@@ -3,6 +3,7 @@ package party.fangi.gnucashapi.persistence.repository;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.CrudRepository;
 import org.springframework.data.repository.PagingAndSortingRepository;
 import org.springframework.stereotype.Repository;
 import party.fangi.gnucashapi.model.AccountType;
@@ -13,7 +14,7 @@ import java.sql.Timestamp;
 import java.util.List;
 
 @Repository
-public interface TransactionRepository extends PagingAndSortingRepository<Transactions, String> {
+public interface TransactionRepository extends PagingAndSortingRepository<Transactions, String>, CrudRepository<Transactions, String> {
     Page<Transactions> findByDescriptionContainingIgnoreCase(String description, PageRequest pageRequest);
 
     Page<Transactions> findBySplitAccountNameContainingIgnoreCase(String accountName, PageRequest pageRequest);

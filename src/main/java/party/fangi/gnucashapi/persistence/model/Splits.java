@@ -1,5 +1,6 @@
 package party.fangi.gnucashapi.persistence.model;
 
+import jakarta.validation.constraints.NotNull;
 import lombok.Data;
 
 import jakarta.persistence.*;
@@ -13,9 +14,11 @@ public class Splits {
     private String guid;
     @ManyToOne
     @JoinColumn(name = "tx_guid")
+    @NotNull
     private Transactions transaction;
     @ManyToOne
     @JoinColumn(name = "account_guid")
+    @NotNull
     private Accounts account;
     @Basic
     @Column(name = "memo", nullable = false, length = 2048)

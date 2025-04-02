@@ -1,6 +1,7 @@
 application:
   cors-origins: ${CORS_ORIGINS}
   jwt-duration-minutes: 10
+  currency-guid: ed2d8e5ab9554260a395ae6dc47a3da7
   pagination:
     page.size: 10
     sort.direction: desc

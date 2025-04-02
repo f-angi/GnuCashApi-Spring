@@ -16,6 +16,9 @@ import org.springframework.web.bind.annotation.*;
 import party.fangi.gnucashapi.model.Expense;
 import party.fangi.gnucashapi.model.Sort;
 import party.fangi.gnucashapi.model.TransactionType;
+import party.fangi.gnucashapi.rest.dto.PageExpense;
+import party.fangi.gnucashapi.rest.dto.TransactionCreateResponse;
+import party.fangi.gnucashapi.rest.dto.TransactionRequest;
 import party.fangi.gnucashapi.service.ExpensesService;
 
 @RestController
@@ -70,4 +73,25 @@ public class ExpensesController {
         return ResponseEntity.ok(expensesService.getExpensesByDescriptionAndAccountNameAndSort(description, accountName, transactionType, sort));
     }
 
+    @Operation(summary = "Create a new transaction",
+            parameters = {
+                    @Parameter(name = "transactionRequest", description = "The transaction to insert", schema = @Schema(implementation = TransactionRequest.class)),
+            },
+            tags = "api")
+    @ApiResponses({
+            @ApiResponse(responseCode = "200", description = "Successful response, returns the created transaction"),
+            @ApiResponse(responseCode = "400", description = "Bad request, invalid input parameters")
+    })
+    @PostMapping(value = "/transactions", consumes = MediaType.APPLICATION_JSON_VALUE, produces = MediaType.APPLICATION_JSON_VALUE)
+    @SecurityRequirement(name = "bearer")
+    public ResponseEntity<TransactionCreateResponse> createTransaction(@RequestBody TransactionRequest transactionRequest) {
+
+        final var createdTransaction = expensesService.createTransaction(
+                transactionRequest.getDate(),
+                transactionRequest.getDescription(),
+                transactionRequest.getAccountFrom(),
+                transactionRequest.getAccountTo(),
+                transactionRequest.getAmount());
+        return ResponseEntity.ok(TransactionCreateResponse.of(createdTransaction.getGuid()));
+    }
 }
